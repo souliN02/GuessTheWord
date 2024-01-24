@@ -1,10 +1,23 @@
 import os
+import random
 
-# Player 1 inputs the secret word
-secret_word = input("Player 1, enter the secret word: ")
+print("Welcome to Guess the Word!")
+print("Please select a game mode")
+
+# List of words for the single-player mode
+animals = ["horse", "cat", "dog", "elephant", "giraffe", "lion", "tiger", "monkey", "snake", "zebra"]
+
+# Ask the user for the game mode
+game_mode = input("Enter '1' for single-player mode or '2' for two-player mode: ")
+
+# Choose the secret word based on the game mode
+if game_mode == '1':
+    secret_word = random.choice(animals)
+else:
+    secret_word = input("Player 1, enter the secret word: ")
 secret_word = secret_word.lower()
 
-# Clears the input from player 1
+# Clear the screen
 os.system('cls')
 
 # Create a list to store the guessed letters
@@ -24,24 +37,18 @@ while max_guesses > 0:
             display_word += "_"
     print(display_word)
 
-    # Player 2 guesses a letter
-    guess = input("Player 2, guess a letter: ").lower()
+    # Player guesses a letter
+    guess = input("Guess a letter: ").lower()
 
     # Check if the guessed letter is in the secret word
     if guess in secret_word:
         print("Correct guess!")
-        print("")
         guessed_letters.append(guess)
     else:
         print("Wrong guess!")
-        print("")
         max_guesses -= 1
 
     # Check if the word has been fully guessed
     if all(letter in guessed_letters for letter in secret_word):
-        print("Congratulations! Player 2 wins!")
+        print("Congratulations! You win!")
         break
-
-# If the player runs out of guesses
-if max_guesses == 0:
-    print("Player 2 loses! The secret word was:", secret_word)
